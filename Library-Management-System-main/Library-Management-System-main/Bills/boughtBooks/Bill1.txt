@@ -1,0 +1,7 @@
+Bill no.1
+Date:Tue Jan 16 16:24:38 CET 2024
+Employee ID:2
+
+978 1 2345 6789 1 ..... Intro to Java ..... 3000 ALL x 100 copies
+
+Total Price 300000 ALL.

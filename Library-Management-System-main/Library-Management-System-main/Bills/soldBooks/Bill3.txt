@@ -1,0 +1,8 @@
+Bill no.3
+Date:Tue Jan 16 16:25:11 CET 2024
+Employee ID:2
+
+978 1 2345 6789 0 ..... Intro to SWE ..... 4000 ALL x 13 copies
+978 1 2345 6789 1 ..... Intro to Java ..... 4000 ALL x 12 copies
+
+Total Price 100000 ALL.
