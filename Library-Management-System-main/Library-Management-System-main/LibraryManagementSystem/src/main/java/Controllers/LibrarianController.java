@@ -167,7 +167,7 @@ public class LibrarianController implements Modifiable {
         return new StandardViewResponse<>(librarian, "");
     }
 
-    static String isValidPassword(String password) {
+    public static String isValidPassword(String password) {
         // Define validation criteria
         int minLength = 8;
         int maxLength = 20;
