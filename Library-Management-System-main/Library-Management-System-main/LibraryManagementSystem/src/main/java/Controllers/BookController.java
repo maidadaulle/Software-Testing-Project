@@ -43,10 +43,11 @@ public class BookController {
     }
 
     public void verifyISBN(String ISBN) throws InvalidIsbnFormatException {
-        if (!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")) {
+        if (!ISBN.matches("^(?=[0-9\\s]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]{1}$")) {
             throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
         }
     }
+
 
     public boolean selectedCategory(ArrayList<CheckBox> c) {
         for (CheckBox cc : c) {
