@@ -106,4 +106,26 @@ class StockControllerTest {
         stockController.updateStockAfterBought(book, 5000);
         assertEquals(6000, book.getStock(), "Stock should be 6000 after buying 5000 books.");
     }
+
+    @Test
+    public void testUpdateStockAfterBoughtNegativeQuantity() {
+        Book book = new Book("ISBN130", "Test Book 8", null, null, "Supplier", 10, 15, 20, "Cover8.jpg");
+        book.setStock(50);
+        FileController.books.add(book);
+        stockController.updateStockAfterBought(book, -10);
+
+        assertEquals(50, book.getStock(), "Stock should remain unchanged when adding a negative quantity.");
+    }
+
+    @Test
+    public void testUpdateStockAfterBoughtQuantityOverflow() {
+        Book book = new Book("ISBN131", "Test Book 9", null, null, "Supplier", 10, 15, 20, "Cover9.jpg");
+        book.setStock(Integer.MAX_VALUE - 1);
+        FileController.books.add(book);
+        stockController.updateStockAfterBought(book, 10);
+
+        assertNotEquals(Integer.MIN_VALUE + 9, book.getStock(), "Stock should not overflow.");
+        assertEquals(Integer.MAX_VALUE - 1, book.getStock(), "Stock should remain unchanged if an overflow is detected.");
+    }
+
 }

@@ -31,8 +31,19 @@ public class StockController {
 
 
     public void updateStockAfterBought(Book book, int quantity) {
+        if (quantity < 0) {
+            System.out.println("Cannot add a negative quantity.");
+            return;
+        }
+
+        if (book.getStock() > Integer.MAX_VALUE - quantity) {
+            System.out.println("Stock addition would cause an integer overflow.");
+            return;
+        }
+
         book.setStock(book.getStock() + quantity);
         book.setPurchasedDate();
     }
+
 
 }
