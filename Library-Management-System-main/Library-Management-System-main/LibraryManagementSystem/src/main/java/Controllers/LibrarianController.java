@@ -206,7 +206,7 @@ public class LibrarianController implements Modifiable {
         return "";
     }
 
-    static boolean isSpecialChar(char ch) {
+    public static boolean isSpecialChar(char ch) {
         // Define your set of special characters
         String specialChars = "!@#$%^&*()._";
         return specialChars.contains(String.valueOf(ch));
