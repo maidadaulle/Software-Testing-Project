@@ -24,13 +24,13 @@ class BookTest {
 
     @Test
     void testConstructorWithoutPurchasedDate() {
-        Book testBook = new Book("54321", "Constructor Test", null, null, "Test Supplier", 5, 10, 15, "testCover.jpg");
+        Book testBook = new Book("54321", "Book1", null, null, "Supplier A", 5, 10, 15, "testCover.jpg");
 
         assertEquals("54321", testBook.getISBN(), "ISBN should be properly initialized.");
-        assertEquals("Constructor Test", testBook.getBookTitle(), "Book title should be properly initialized.");
+        assertEquals("Book1", testBook.getBookTitle(), "Book title should be properly initialized.");
         assertNull(testBook.getAuthor(), "Author should be null when not provided.");
         assertNull(testBook.getBookCategories(), "Book categories should be null when not provided.");
-        assertEquals("Test Supplier", testBook.getSupplier(), "Supplier should be properly initialized.");
+        assertEquals("Supplier A", testBook.getSupplier(), "Supplier should be properly initialized.");
         assertEquals(5, testBook.getPurchasedPrice(), "Purchased price should be properly initialized.");
         assertEquals(10, testBook.getOriginalPrice(), "Original price should be properly initialized.");
         assertEquals(15, testBook.getSellingPrice(), "Selling price should be properly initialized.");
@@ -41,13 +41,13 @@ class BookTest {
     @Test
     void testConstructorWithPurchasedDate() {
         Date testDate = new Date();
-        Book testBook = new Book("54321", "Constructor Test", null, null, "Test Supplier", 5, 10, 15, "testCover.jpg", testDate);
+        Book testBook = new Book("54321", "Book2", null, null, "Supplier B", 5, 10, 15, "testCover.jpg", testDate);
 
         assertEquals("54321", testBook.getISBN(), "ISBN should be properly initialized.");
-        assertEquals("Constructor Test", testBook.getBookTitle(), "Book title should be properly initialized.");
+        assertEquals("Book2", testBook.getBookTitle(), "Book title should be properly initialized.");
         assertNull(testBook.getAuthor(), "Author should be null when not provided.");
         assertNull(testBook.getBookCategories(), "Book categories should be null when not provided.");
-        assertEquals("Test Supplier", testBook.getSupplier(), "Supplier should be properly initialized.");
+        assertEquals("Supplier B", testBook.getSupplier(), "Supplier should be properly initialized.");
         assertEquals(5, testBook.getPurchasedPrice(), "Purchased price should be properly initialized.");
         assertEquals(10, testBook.getOriginalPrice(), "Original price should be properly initialized.");
         assertEquals(15, testBook.getSellingPrice(), "Selling price should be properly initialized.");
@@ -63,8 +63,8 @@ class BookTest {
 
     @Test
     void testGetSetBookTitle() {
-        book.setBookTitle("Updated Test Book");
-        assertEquals("Updated Test Book", book.getBookTitle(), "Book title should be updated correctly.");
+        book.setBookTitle("book");
+        assertEquals("book", book.getBookTitle(), "Book title should be updated correctly.");
     }
 
     @Test
@@ -77,8 +77,8 @@ class BookTest {
 
     @Test
     void testGetSetSupplier() {
-        book.setSupplier("New Supplier");
-        assertEquals("New Supplier", book.getSupplier(), "Supplier should be updated correctly.");
+        book.setSupplier("Supplier c");
+        assertEquals("Supplier c", book.getSupplier(), "Supplier should be updated correctly.");
     }
 
 
@@ -107,7 +107,7 @@ class BookTest {
         book.setStock(100);
         assertEquals(100, book.getStock(), "Stock should be updated correctly.");
     }
-    
+
     @Test
     void testSetStockValidPositive() {
         book.setStock(10);
@@ -135,16 +135,16 @@ class BookTest {
 
     @Test
     void testBooksBoughtToday() {
-        Book bookToday = new Book("11111", "Today Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", new Date());
+        Book bookToday = new Book("11111", "Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", new Date());
         FileController.books.add(bookToday);
 
         Date pastDate = Date.from(LocalDate.of(2022, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Book bookPast = new Book("22222", "Past Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", pastDate);
+        Book bookPast = new Book("22222", "Book 2", null, null, "Supplier", 10, 15, 20, "cover.jpg", pastDate);
         FileController.books.add(bookPast);
 
         ArrayList<Book> todayBooks = Book.booksBoughtToday();
         assertEquals(1, todayBooks.size(), "Only books bought today should be returned.");
-        assertEquals("Today Book", todayBooks.get(0).getBookTitle());
+        assertEquals("Book", todayBooks.get(0).getBookTitle());
     }
 
     @Test
