@@ -91,4 +91,19 @@ public class LibrarianControllerBvtTest {
         assertEquals("Password must contain at least 1 special character!", isValidPassword("Valid1Password"));
         assertEquals("Password must contain at least 1 digit!", isValidPassword("ValidPassword!"));
     }
+
+    @Test
+    @DisplayName("BVT Password with Special Characters")
+    void testPasswordWithSpecialCharacter() {
+        // Valid password containing a special character
+        assertTrue(isValidPassword("Valid1Password!").isEmpty()); 
+        assertTrue(isValidPassword("Valid@Password1").isEmpty());
+        assertTrue(isValidPassword("Password1#").isEmpty()); 
+
+        // Invalid passwords with special characters that do not meet other conditions
+        assertEquals("Password must have at least 1 upper case!", isValidPassword("password1@"));
+        assertEquals("Password must have at least 1 lower case!", isValidPassword("PASSWORD1@"));
+        assertEquals("Password must contain at least 1 digit!", isValidPassword("Password!"));
+    }
+
 }
