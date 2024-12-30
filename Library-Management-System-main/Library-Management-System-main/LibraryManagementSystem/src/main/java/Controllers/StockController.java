@@ -15,11 +15,20 @@ public class StockController {
         return str;
     }
 
-    public void updateStockAfterSold(ArrayList<Book> book, ArrayList<Integer> quantity) {
-        for (int i = 0; i < book.size(); i++) {
-            book.get(i).setStock(book.get(i).getStock() - quantity.get(i));
+    public void updateStockAfterSold(ArrayList<Book> books, ArrayList<Integer> quantities) {
+        for (int i = 0; i < books.size(); i++) {
+            int currentStock = books.get(i).getStock();
+            int quantityToSell = quantities.get(i);
+
+
+            if (currentStock >= quantityToSell) {
+                books.get(i).setStock(currentStock - quantityToSell);
+            } else {
+                books.get(i).setStock(0);
+            }
         }
     }
+
 
     public void updateStockAfterBought(Book book, int quantity) {
         book.setStock(book.getStock() + quantity);

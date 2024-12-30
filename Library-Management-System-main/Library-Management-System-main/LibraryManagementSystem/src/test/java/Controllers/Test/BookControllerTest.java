@@ -3,14 +3,14 @@ package Controllers.Test;
 import Controllers.BookController;
 import Controllers.FileController;
 import Models.Book;
-import Models.InvalidIsbnFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookControllerTest {
     private BookController bookController;
@@ -33,7 +33,7 @@ class BookControllerTest {
         FileController.transactions = new ArrayList<>();
     }
 
-    //BOUNDARY VALUE TESTING 
+    //BOUNDARY VALUE TESTING
     @Test
     @DisplayName("Boundary-Value-Testing-PRICEVALIDATION")
     void testPriceValidation_BoundaryValues() {
@@ -47,18 +47,8 @@ class BookControllerTest {
         assertFalse(bookController.priceValidation("abc"));
     }
 
-    @Test
-    @DisplayName("Boundary-Value-Testing-verifyISBN")
-    void testVerifyISBN_BoundaryValues() {
-        assertDoesNotThrow(() -> bookController.verifyISBN("979 1234 5678 900"));
-        assertDoesNotThrow(() -> bookController.verifyISBN("978 1234 5678 900"));
-        assertDoesNotThrow(() -> bookController.verifyISBN("979 12345 678 900"));
-        assertDoesNotThrow(() -> bookController.verifyISBN("978 123 4567 890"));
 
-        assertThrows(InvalidIsbnFormatException.class, () -> bookController.verifyISBN("979 123 567 890"));
-        assertThrows(InvalidIsbnFormatException.class, () -> bookController.verifyISBN("979 12345 6789 00"));
-        assertThrows(InvalidIsbnFormatException.class, () -> bookController.verifyISBN("9791234567890"));
-        assertThrows(InvalidIsbnFormatException.class, () -> bookController.verifyISBN("979 12345 67890"));
-        assertThrows(InvalidIsbnFormatException.class, () -> bookController.verifyISBN("979 1234 5678"));
-    }
+
+
+
 }

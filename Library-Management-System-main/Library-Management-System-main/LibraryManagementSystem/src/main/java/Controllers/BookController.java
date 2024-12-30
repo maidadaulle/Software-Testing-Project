@@ -1,14 +1,11 @@
 package Controllers;
 
+import Models.*;
+import javafx.scene.control.CheckBox;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import Models.Author;
-import Models.BillsType;
-import Models.Book;
-import Models.Category;
-import Models.InvalidIsbnFormatException;
-import javafx.scene.control.CheckBox;
 
 public class BookController {
 
@@ -47,6 +44,7 @@ public class BookController {
             throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
         }
     }
+
 
 
     public boolean selectedCategory(ArrayList<CheckBox> c) {
