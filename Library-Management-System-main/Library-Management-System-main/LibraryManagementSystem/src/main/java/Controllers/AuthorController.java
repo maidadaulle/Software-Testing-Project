@@ -11,7 +11,7 @@ public class AuthorController {
     }
 
     public StandardViewResponse<Author> createAuthor(String name, String surname, Gender gender) {
-        Author author=null;
+        Author author = null;
         try {
 
             if (name.isEmpty() || surname.isEmpty()) {
@@ -38,9 +38,10 @@ public class AuthorController {
                     return new StandardViewResponse<>(author, "Surname can't contain special characters!");
                 }
             }
-            if(!isUniqueAuthor(name, surname)) {
+            if (!isUniqueAuthor(name, surname)) {
                 return new StandardViewResponse<>(author, "There already exists an Author with this credentials");
             }
+
             System.out.println("Author was successfully added");
             author = new Author(name, surname, gender);
             addAuthor(author);
