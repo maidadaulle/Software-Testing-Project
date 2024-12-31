@@ -191,22 +191,19 @@ class AuthorControllerTestCoverage {
 
     @Test
     void testCreateAuthor_ExceptionHandling() {
-        // Arrange
+
         AuthorController authorController = Mockito.spy(new AuthorController());
         String name = "Ismail";
         String surname = "Kadare";
         Gender gender = Gender.MALE;
 
-        // Mock addAuthor to throw a RuntimeException
         doThrow(new RuntimeException("Unexpected error"))
                 .when(authorController).addAuthor(any(Author.class));
 
-        // Act
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
-        // Assert
-        assertNull(response.getUser());  // The author should be null
-        assertEquals("Unexpected error", response.getErrorMessage());  // The error message should match the exception message
+        assertNull(response.getUser());  
+        assertEquals("Unexpected error", response.getErrorMessage());
     }
 
 
