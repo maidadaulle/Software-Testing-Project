@@ -46,9 +46,10 @@ public class AuthorController {
             author = new Author(name, surname, gender);
             addAuthor(author);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new StandardViewResponse<>(author, e.getMessage());
-        }
+        System.out.println(e.getMessage());
+        return new StandardViewResponse<>(null, e.getMessage());  // Return null for the author
+    }
+
 
         return new StandardViewResponse<>(author, "");
     }

@@ -100,22 +100,27 @@ public class BookController {
         return result;
     }
 
-    public ArrayList<Book> getBooksSoldThisYear() {
+    public static ArrayList<Book> getBooksSoldThisYear() {
         Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
         var result = new ArrayList<Book>();
         var billList = FileController.transactions;
+
+        // Iterate through the transactions
         for (var bill : billList) {
             var books = bill.getBooks();
-            if (bill.getType() == BillsType.Sold) {
+            if (bill.getType() == BillsType.Sold) { // Only consider sold books
                 for (var book : books) {
+                    System.out.println("Checking book: " + book.getBookTitle() + " purchased on: " + book.getPurchasedDate());
+                    // Check if book was sold within the last 12 months
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result.add(book);
-                        System.out.println(book);
+                        result.add(book); // Add book to result if within the last 12 months
+                        System.out.println("Added book: " + book.getBookTitle());
                     }
                 }
             }
         }
         return result;
     }
+
 
 }
