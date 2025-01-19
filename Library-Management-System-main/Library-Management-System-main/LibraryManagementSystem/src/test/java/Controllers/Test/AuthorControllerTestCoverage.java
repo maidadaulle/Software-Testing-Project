@@ -11,6 +11,8 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
+import static Models.Gender.MALE;
+import static Models.Gender.Male;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 class AuthorControllerTestCoverage {
@@ -21,9 +23,9 @@ class AuthorControllerTestCoverage {
     }
 
     private void addExistingAuthor(String name, String surname) {
-        Author.setNoAuthor(1);
-        Author existingAuthor = new Author(name, surname, Gender.MALE);
-        FileController.authors.add(existingAuthor);
+        Author.setNoAuthor(1); // Ensure ID is properly set
+        Author existingAuthor = new Author(name, surname, MALE);
+        FileController.authors.add(existingAuthor); // Ensure author is added
     }
 
     @Test
@@ -31,7 +33,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -47,7 +49,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -60,7 +62,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -73,7 +75,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Is";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -86,7 +88,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismaillllllllllllllllllllll";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -99,7 +101,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail123";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -112,7 +114,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail@Kadare";
         String surname = "Ismail";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -125,7 +127,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "Ka";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -139,7 +141,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "Kadarererererererererreerre";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -152,7 +154,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "Kadare123";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -166,7 +168,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "Ismail";
         String surname = "Kadare@";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         StandardViewResponse<Author> response = authorController.createAuthor(name, surname, gender);
 
@@ -179,7 +181,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = new AuthorController();
         String name = "George";
         String surname = "Martin";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         addExistingAuthor(name, surname);
 
@@ -195,7 +197,7 @@ class AuthorControllerTestCoverage {
         AuthorController authorController = Mockito.spy(new AuthorController());
         String name = "Ismail";
         String surname = "Kadare";
-        Gender gender = Gender.MALE;
+        Gender gender = MALE;
 
         doThrow(new RuntimeException("Unexpected error"))
                 .when(authorController).addAuthor(any(Author.class));
@@ -205,6 +207,168 @@ class AuthorControllerTestCoverage {
         assertNull(response.getUser());  
         assertEquals("Unexpected error", response.getErrorMessage());
     }
+
+
+    @Test
+    void testFindAuthor_Existing() {
+        AuthorController authorController = new AuthorController();
+        Author author = new Author("Ismail", "Kadare", MALE);
+        FileController.authors.add(author);
+
+        Author foundAuthor = authorController.findAuthor(author.getID());
+        assertNotNull(foundAuthor, "Failed to find existing author.");
+        assertEquals(author, foundAuthor, "Returned author does not match.");
+    }
+
+    @Test
+    void testFindAuthor_NonExistent() {
+        AuthorController authorController = new AuthorController();
+        Author foundAuthor = authorController.findAuthor(999);
+        assertNull(foundAuthor, "Expected no author to be found for a non-existent ID.");
+    }
+    @Test
+    void testEditAuthor_ValidInput() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Rita", "Petro", Gender.Female);
+
+        assertNotNull(response.getUser());
+        assertEquals("Rita", response.getUser().getName());
+        assertEquals("Petro", response.getUser().getSurname());
+        assertEquals(Gender.Female, response.getUser().getGender());
+        assertEquals("", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_EmptyName() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "", "Kadare", Gender.Male);
+
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Fields are empty!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_EmptySurname() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail", "", Gender.Male);
+
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Fields are empty!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_NameLengthInvalid() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");  // Set up the initial author with the name "Ismail" and surname "Kadare"
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "I", "Kadare", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Name can't have this length!", response.getErrorMessage());
+
+        response = authorController.editAuthor(1, "Ismailllllllllllllllllllllllllllllll", "Kadare", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Name can't have this length!", response.getErrorMessage());
+    }
+
+
+
+    @Test
+    void testEditAuthor_NameWithNumbers() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail123", "Kadare", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Name can't contain numbers!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_NameWithSpecialCharacters() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail@", "Kadare", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Name can't contain special characters!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_SurnameLengthInvalid() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail", "K", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Surname cannot have this length!", response.getErrorMessage());
+
+        response = authorController.editAuthor(1, "Ismail", "ThisSurnameIsWayTooLong", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Surname cannot have this length!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_SurnameWithNumbers() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail", "Kadare123", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Surname can't contain numbers!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_SurnameWithSpecialCharacters() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Ismail", "Kadare@", Gender.Male);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("Surname can't contain special characters!", response.getErrorMessage());
+    }
+
+    @Test
+    void testEditAuthor_AuthorAlreadyExists() {
+        AuthorController authorController = new AuthorController();
+        addExistingAuthor("Ismail", "Kadare");
+        addExistingAuthor("Rita", "Petro");
+
+
+        StandardViewResponse<Author> response = authorController.editAuthor(1, "Rita", "Petro", Gender.Female);
+        assertNotNull(response.getUser());
+        assertEquals("Ismail", response.getUser().getName());
+        assertEquals("Kadare", response.getUser().getSurname());
+        assertEquals("There already exists an Author with this credentials", response.getErrorMessage());
+    }
+
+
+
 
 
 

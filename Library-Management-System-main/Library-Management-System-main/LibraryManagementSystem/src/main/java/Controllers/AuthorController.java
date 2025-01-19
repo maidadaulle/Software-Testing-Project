@@ -102,16 +102,17 @@ public class AuthorController {
                     return new StandardViewResponse<>(author, "Surname can't contain special characters!");
                 }
             }
-            if(!isUniqueAuthor(name, surname)) {
-                return new StandardViewResponse<>(author, "There already exists an Author with this credentials");
+            if (!author.getName().equals(name) || !author.getSurname().equals(surname)) {
+                if (!isUniqueAuthor(name, surname)) {
+                    return new StandardViewResponse<>(author, "There already exists an Author with this credentials");
+                }
             }
             author.setName(name);
             author.setSurname(surname);
             author.setGender(gender);
             System.out.println("Author was successfully edited");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new StandardViewResponse<>(author, e.getMessage());
+            return new StandardViewResponse<>(null, e.getMessage());
         }
         return new StandardViewResponse<>(author, "");
     }
