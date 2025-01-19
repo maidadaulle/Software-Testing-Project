@@ -161,7 +161,7 @@ class BookTest {
         assertEquals("Book", todayBooks.get(0).getBookTitle());
     }
 
-    //Integration 
+    //Integration
     @Test
     void testBooksBoughtThisMonth() {
         FileController.books.clear();
