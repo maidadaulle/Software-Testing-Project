@@ -119,6 +119,19 @@ class BookTest {
         book.setStock(0);
         assertEquals(0, book.getStock(), "Stock should be updated to 0.");
     }
+    @Test
+    void testSetCover() {
+        String newCover = "newCover.jpg";
+        book.setCover(newCover);
+        assertEquals(newCover, book.getCover(), "The cover address should be updated.");
+    }
+
+    @Test
+    void testSetAuthor() {
+        Author newAuthor = new Author("George", "Orwell", Gender.Male);
+        book.setAuthor(newAuthor);
+        assertEquals(newAuthor, book.getAuthor(), "The author should be updated.");
+    }
 
     @Test
     void testSetStockInvalidNegative() {
@@ -149,17 +162,16 @@ class BookTest {
 
     @Test
     void testBooksBoughtThisMonth() {
+        FileController.books.clear();
+
         Book bookThisMonth = new Book("33333", "This Month Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", new Date());
         FileController.books.add(bookThisMonth);
-
-        Date pastDate = Date.from(LocalDate.of(2022, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Book bookPast = new Book("44444", "Past Month Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", pastDate);
-        FileController.books.add(bookPast);
-
         ArrayList<Book> monthBooks = Book.booksBoughtThisMonth();
+
         assertEquals(1, monthBooks.size(), "Only books bought this month should be returned.");
         assertEquals("This Month Book", monthBooks.get(0).getBookTitle());
     }
+
 
     @Test
     void testToString() {
