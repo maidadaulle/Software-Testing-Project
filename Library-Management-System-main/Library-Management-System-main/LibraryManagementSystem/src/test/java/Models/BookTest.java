@@ -146,6 +146,7 @@ class BookTest {
         assertEquals(today.toString(), book.getPurchasedDate().toString(), "Purchased date should be set to today.");
     }
 
+    //Integration
     @Test
     void testBooksBoughtToday() {
         Book bookToday = new Book("11111", "Book", null, null, "Supplier", 10, 15, 20, "cover.jpg", new Date());
@@ -160,6 +161,7 @@ class BookTest {
         assertEquals("Book", todayBooks.get(0).getBookTitle());
     }
 
+    //Integration 
     @Test
     void testBooksBoughtThisMonth() {
         FileController.books.clear();
