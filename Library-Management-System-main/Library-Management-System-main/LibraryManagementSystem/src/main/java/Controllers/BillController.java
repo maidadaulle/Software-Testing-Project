@@ -21,25 +21,32 @@ public class BillController {
     }
 
     public void printBill(Bill b) {
+        if (b == null) {
+            throw new IllegalArgumentException("Bill cannot be null");
+        }
         try {
             File print;
+            String directoryPath;
             if (b.getType() == BillsType.Sold) {
-                print = new File("Bills/soldBooks/Bill" + b.getBillNumber() + ".txt");
+                directoryPath = "Bills/soldBooks";
             } else {
-                print = new File("Bills/boughtBooks/Bill" + b.getBillNumber() + ".txt");
+                directoryPath = "Bills/boughtBooks";
             }
-            try (
-                PrintWriter o = new PrintWriter(print);) {
+
+            print = new File(directoryPath + "/Bill" + b.getBillNumber() + ".txt");
+
+            System.out.println("Bill " + b.getBillNumber() + " printed successfully.");
+            System.out.println("Directory path: " + directoryPath);
+            System.out.println("File path: " + print.getAbsolutePath());
+
+            try (PrintWriter o = new PrintWriter(print)) {
                 o.print(b);
                 addBill(b);
-                System.out.println(FileController.transactions.get(b.getBillNumber()-1));
-            }
-            System.out.println("Bill " + b.getBillNumber() + " printed successfully.");
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        } catch (FileNotFoundException e1) {
-            System.out.println(e1.getMessage());
-        }
+                System.out.println(FileController.transactions.get(b.getBillNumber() - 1)); }
+
+
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());}
     }
 
     public int stringToInt(String x) {
