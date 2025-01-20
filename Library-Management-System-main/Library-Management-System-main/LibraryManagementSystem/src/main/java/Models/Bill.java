@@ -113,9 +113,6 @@ public class Bill implements Serializable {
         str += "\n\nTotal Price " + totalPrice + " ALL.";
         return str;
     }
-        @Override
-    public int hashCode() {
-        return Objects.hash(billNumber, books, quantity, totalPrice, type);
-    }
+      
 
 }
