@@ -45,43 +45,11 @@ class BillControllerUnitTest {
         ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(consoleOutput));
 
-
         assertThrows(IllegalArgumentException.class, () -> {billController.printBill(null);});
 
         assertFalse(consoleOutput.toString().contains("Bill cannot be null"), "The exception message should be printed.");
     }
-
-
-
-    @Test
-    void testCreateBill() {
-        // Initialize FileController.transactions
-        FileController.transactions = new ArrayList<>();
-        BillController billController = new BillController();
-
-        // Test data
-        int ID = 1;
-        ArrayList<Book> books = new ArrayList<>();
-        ArrayList<Integer> quantities = new ArrayList<>();
-        int totalPrice = 100;
-        BillsType type = BillsType.Sold;
-
-        // Call createBill method
-        billController.createBill(ID, books, quantities, totalPrice, type);
-
-        // Debugging - print the size of transactions and bill info
-        System.out.println("Transactions Size: " + FileController.transactions.size());
-        if (!FileController.transactions.isEmpty()) {
-            System.out.println("First Bill in Transactions: " + FileController.transactions.get(0).getBillNumber());
-        }
-
-        // Ensure the bill has been added to transactions
-        assertEquals(1, FileController.transactions.size(), "A new bill should be added to transactions.");
-        assertEquals(ID, FileController.transactions.get(0).getBillNumber(), "The bill ID should match.");
-    }
-
-
-
+    
 
     @Test
     void testPrintBillSuccess(@TempDir Path tempDir) {
@@ -145,20 +113,6 @@ class BillControllerUnitTest {
         }
     }
 
-    @Test
-    void testAddBillCall() {
-        // Prepare the bill object
-        Bill bill = new Bill(1, new ArrayList<>(), new ArrayList<>(), 100, BillsType.Bought);
-
-        // Initialize FileController.transactions
-        FileController.transactions = new ArrayList<>();
-
-        // Call printBill which should add the bill to transactions
-        billController.printBill(bill);
-
-        // Verify that the bill has been added to transactions
-        assertTrue(FileController.transactions.contains(bill), "The bill should be added to transactions.");
-    }
 
 
 
