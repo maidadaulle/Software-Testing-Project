@@ -2,5 +2,5 @@ package Models;
 
 public enum BillsType {
     Sold,
-    Bought
+    Purchased, Bought
 }
