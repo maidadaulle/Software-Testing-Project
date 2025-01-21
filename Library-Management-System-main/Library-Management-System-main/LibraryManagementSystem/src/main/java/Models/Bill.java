@@ -32,9 +32,9 @@ public class Bill implements Serializable {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    /*public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
+    }*/
 
     public int getTotalPrice() {
         return totalPrice;
@@ -56,9 +56,9 @@ public class Bill implements Serializable {
         return billNumber;
     }
 
-    public void setBillNumber(int billNumber) {
+    /*public void setBillNumber(int billNumber) {
         this.billNumber = billNumber;
-    }
+    }*/
 
     public ArrayList<Book> getBooks() {
         return books;
@@ -88,9 +88,9 @@ public class Bill implements Serializable {
         return type;
     }
 
-    public void setType(BillsType type) {
+    /*public void setType(BillsType type) {
         this.type = type;
-    }
+    }*/
 
     @Override
     public String toString() {
