@@ -13,14 +13,11 @@ class BillUnitTest {
 
     @BeforeEach
     void setUp() {
-        // Reset totalBills to 0 before each test to ensure bill number starts at 1
         Bill.setTotalBills(0);
 
-        // Prepare some mock data for the test
         books = new ArrayList<>();
         quantities = new ArrayList<>();
 
-        // Add books with proper Author and Category parameters
         books.add(new Book("1234",
                 "Book 1",
                 new Author("Author1", "Surname1", Gender.MALE),
@@ -45,9 +42,7 @@ class BillUnitTest {
         billType = BillsType.Sold;
         bill = new Bill(1, books, quantities, 950, billType);
     }
-
-
-
+    
     @Test
     void testGetCreatedDate() {
         Date createdDate = bill.getCreatedDate();
@@ -97,18 +92,16 @@ class BillUnitTest {
     @Test
     void testSetBooks() {
         ArrayList<Book> newBooks = new ArrayList<>();
-        // Create an Author instance with all required parameters: name, surname, gender
-        Author author = new Author("Author", "Author3", Gender.MALE);  // Adjust Gender as needed
+        Author author = new Author("Author", "Author3", Gender.MALE);  
 
-        // Create a new Book instance and pass the author along with other required parameters
         newBooks.add(new Book("9999",
                 "Book 3",
-                author,  // Pass the Author instance
-                new ArrayList<Category>(),  // Empty list for categories
+                author,  
+                new ArrayList<Category>(), 
                 "Supplier3",
-                300, 400, 500,  // Prices: purchasedPrice, originalPrice, sellingPrice
+                300, 400, 500,  
                 "address3",
-                new Date()));  // Purchased date (current date)
+                new Date())); 
 
         bill.setBooks(newBooks);
         assertEquals(newBooks, bill.getBooks(), "Books should be updated correctly");
@@ -130,47 +123,6 @@ class BillUnitTest {
         assertEquals(10, Bill.getTotalBills(), "Total bills should be set correctly");
     }
 
-    /*@Test
-    void testToStringForPurchasedBill() {
-        // Setup test data
-        ArrayList<Book> booksForTest = new ArrayList<>();
-        booksForTest.add(new Book("1234", "Book 1", new Author("Author1", "Surname1", Gender.MALE), new ArrayList<>(), "Supplier1", 100, 150, 200, "address1", new Date()));
-        booksForTest.add(new Book("5678", "Book 2", new Author("Author2", "Surname2", Gender.Female), new ArrayList<>(), "Supplier2", 150, 200, 250, "address2", new Date()));
-
-        ArrayList<Integer> quantitiesForTest = new ArrayList<>();
-        quantitiesForTest.add(1);
-        quantitiesForTest.add(2);
-
-        // Create the Bill (Purchased type)
-        Bill purchasedBill = new Bill(1, booksForTest, quantitiesForTest, 1000, BillsType.Purchased);
-
-        // Get the actual output of toString()
-        String actualString = purchasedBill.toString();
-
-        // Expected string without the dynamic Date (replaced with 'xxx')
-        String expectedString = "Bill no.1\nDate:xxx\nEmployee ID:1\n" +
-                "\n1234 ..... Book 1 ..... 150 ALL x 1 copies" +
-                "\n5678 ..... Book 2 ..... 200 ALL x 2 copies" +
-                "\n\nTotal Price 1000 ALL.";
-
-        // Remove the dynamic Date part from both actual and expected strings
-        String actualStringWithoutDate = actualString.replaceAll("Date:.*\n", "Date:xxx\n");
-        String expectedStringWithoutDate = expectedString.replaceAll("Date:.*\n", "Date:xxx\n");
-
-        // Assert that the two strings are now equal
-        assertEquals(expectedStringWithoutDate, actualStringWithoutDate, "toString() should match the expected format for a purchased bill");
-
-        // Optionally, check that the total price is included correctly in the actual string
-        assertTrue(actualString.contains("Total Price 1000 ALL."), "toString() should include the correct total price");
-    }*/
-
-
-
-
-
-
-
-
 
     @Test
     void testSetBooksEmpty() {
@@ -182,15 +134,11 @@ class BillUnitTest {
 
     @Test
     void testGetType() {
-        // Create a bill of type Sold
+
         Bill soldBill = new Bill(1, books, quantities, 950, BillsType.Sold);
         assertEquals(BillsType.Sold, soldBill.getType(), "The type should be Sold");
 
-        // Create a bill of type Purchased
         Bill purchasedBill = new Bill(2, books, quantities, 1000, BillsType.Purchased);
         assertEquals(BillsType.Purchased, purchasedBill.getType(), "The type should be Purchased");
     }
-
-
-
 }
