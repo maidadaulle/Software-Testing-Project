@@ -1,6 +1,9 @@
-package Controllers;
+package Controllers.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import Controllers.CategoryController;
+import Controllers.FileController;
 import Models.Category;
 import Models.StandardViewResponse;
 import org.junit.jupiter.api.BeforeEach;
