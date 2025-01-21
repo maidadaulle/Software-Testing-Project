@@ -20,8 +20,8 @@ class LogInControllerTest {
         public void setUp() {
             // Initialize FileController with sample data
             FileController.users = new ArrayList<>();
-            FileController.users.add(new User("JohnDoe", "password123", Roles.Librarian));
-            FileController.users.add(new User("JaneDoe", "securePass", Roles.ADMIN));
+            FileController.users.add(new User("Maida", "password123", Roles.Librarian));
+            FileController.users.add(new User("Tea", "securePass", Roles.ADMIN));
 
             // Initialize the LogInController
             logInController = new LogInController();
@@ -29,9 +29,9 @@ class LogInControllerTest {
 
         @Test
         public void testLogInWithValidCredentials() {
-            StandardViewResponse<User> response = logInController.OnLogInBtnClick("JohnDoe", "password123");
+            StandardViewResponse<User> response = logInController.OnLogInBtnClick("Maida", "password123");
             assertNotNull(response.getUser());
-            assertEquals("JohnDoe", response.getUser().getUsername());
+            assertEquals("Maida", response.getUser().getUsername());
             assertEquals("", response.getErrorMessage());
         }
 
@@ -44,7 +44,7 @@ class LogInControllerTest {
 
         @Test
         public void testLogInWithInvalidPassword() {
-            StandardViewResponse<User> response = logInController.OnLogInBtnClick("JohnDoe", "wrongPassword");
+            StandardViewResponse<User> response = logInController.OnLogInBtnClick("Maida", "wrongPassword");
             assertNull(response.getUser());
             assertEquals("Wrong Password!", response.getErrorMessage());
         }
@@ -58,7 +58,7 @@ class LogInControllerTest {
 
         @Test
         public void testLogInWithEmptyPassword() {
-            StandardViewResponse<User> response = logInController.OnLogInBtnClick("JohnDoe", "");
+            StandardViewResponse<User> response = logInController.OnLogInBtnClick("Maida", "");
             assertNull(response.getUser());
             assertEquals("Password cannot be null!", response.getErrorMessage());
         }
