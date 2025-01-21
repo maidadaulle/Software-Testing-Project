@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import static org.mockito.Mockito.*;
 
 class CategoryControllerTest {
 
@@ -71,6 +72,14 @@ class CategoryControllerTest {
         assertEquals("Name can't contain special characters!", response.getErrorMessage());
     }
 
+    //Unit Testing
+    @Test
+    void testCreateCategoryNumbers() {
+        StandardViewResponse<Category> response = controller.createCategory("Tech1234");
+        assertNull(response.getUser());
+        assertEquals("Name can't contain numbers!", response.getErrorMessage());
+    }
+
     // Unit test
     @Test
     void testCreateCategoryDuplicateName() {
@@ -91,34 +100,77 @@ class CategoryControllerTest {
         assertEquals("Science", FileController.categories.get(0).getCategoryName(), "The category name should be 'Science'.");
     }
 
-    // Unit test:
+    // Integration test
     @Test
     void testEditCategoryValid() {
         Category category = new Category("Education");
-        MockFileController.categories.add(category);
-        assertNotNull(MockFileController.categories.get(0), "The category should not be null before editing");
+        FileController.categories.add(category);
+        assertNotNull(FileController.categories.get(0), "The category should not be null before editing");
 
         StandardViewResponse<Category> response = controller.editCategory(category.getID(), "Learning");
 
         assertNotNull(response, "The response should not be null");
         assertNotNull(response.getUser(), "The response user should not be null");
         assertEquals("Learning", response.getUser().getCategoryName(), "The category name should be updated to 'Learning'");
-
         assertTrue(response.getErrorMessage().isEmpty(), "The error message should be empty");
+    }
+
+    // Integration test
+    @Test
+    void testEditCategoryEmptyName() {
+        FileController.categories = new ArrayList<>();
+        Category category = new Category("Old Category");
+        FileController.categories.add(category);
+
+        StandardViewResponse<Category> response = controller.editCategory(category.getID(), "");
+
+        assertNotNull(response.getUser(), "The response category should not be null");
+        assertEquals("Fields are empty!", response.getErrorMessage());
     }
 
     // Unit test
     @Test
     void testEditCategoryNonUniqueName() {
         Category category1 = new Category("Education");
-        MockFileController.categories.add(category1);
+        FileController.categories.add(category1);
 
         Category category2 = new Category("Science");
-        MockFileController.categories.add(category2);
+        FileController.categories.add(category2);
+
         StandardViewResponse<Category> response = controller.editCategory(category2.getID(), "Education");
 
-        assertNotNull(response.getUser(), "The response category should not be null");
+         assertNotNull(response.getUser(), "The response category should not be null");
         assertEquals("There already exists a category with this name", response.getErrorMessage());
+    }
+
+    // Unit test
+    @Test
+    void testEditCategorySpecialCharsInName() {
+        Category category = new Category("Education");
+        FileController.categories.add(category);
+        StandardViewResponse<Category> response = controller.editCategory(category.getID(), "Edu@cation");
+        assertNotNull(response.getUser());
+        assertEquals("Name can't contain special characters!", response.getErrorMessage());
+    }
+
+    // Unit test
+    @Test
+    void testEditCategoryNumbersInName() {
+        Category category = new Category("Education");
+        FileController.categories.add(category);
+        StandardViewResponse<Category> response = controller.editCategory(category.getID(), "Education124");
+        assertNotNull(response.getUser());
+        assertEquals("Name can't contain numbers!", response.getErrorMessage());
+    }
+
+    // Unit test
+    @Test
+    void testEditCategoryInvalidLength() {
+        Category category = new Category("Education");
+        FileController.categories.add(category);
+        StandardViewResponse<Category> response = controller.editCategory(category.getID(), "Eduuuuuuuuuuuuuuuuuuuuuuuuuuuucation");
+        assertNotNull(response.getUser());
+        assertEquals("Name can't have this length!", response.getErrorMessage());
     }
 
     // Integration test
@@ -134,4 +186,17 @@ class CategoryControllerTest {
         assertNotNull(result, "The category should not be null");
         assertEquals("Fiction", result.getCategoryName(), "The category name should match");
     }
+
+    //Integration Test
+    @Test
+    void testFindCategoryReturnsNullWhenNotFound() {
+        if (FileController.categories == null) {
+            FileController.categories = new ArrayList<>();
+        }
+        int nonExistentId = 999;
+        Category result = controller.findCategory(nonExistentId);
+        assertNull(result, "The category should be null since the ID does not exist in the list");
+    }
+
+
 }
