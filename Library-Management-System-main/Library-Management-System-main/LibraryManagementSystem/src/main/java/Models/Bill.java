@@ -94,25 +94,20 @@ public class Bill implements Serializable {
 
     @Override
     public String toString() {
-        String str = "Bill no." + billNumber + "\nDate:" + createdDate + "\nEmployee ID:" + soldBy + "\n";
+        StringBuilder str = new StringBuilder("Bill no." + billNumber + "\nDate:" + createdDate + "\nEmployee ID:" + soldBy + "\n");
         int i = 0;
-        if(this.type == BillsType.Sold){
-            for (Book b : books) {
-                str += "\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + b.getSellingPrice() + " ALL";
-                str += " x " + quantity.get(i) + " copies";
-                i++;
-            }
-        } else {
-            for (Book b : books) {
-                str += "\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + b.getPurchasedPrice() + " ALL";
-                str += " x " + quantity.get(i) + " copies";
-                i++;
-            }
+        String priceType = (this.type == BillsType.Sold) ? "SellingPrice" : "PurchasedPrice";
+
+        for (Book b : books) {
+            double price = (this.type == BillsType.Sold) ? b.getSellingPrice() : b.getPurchasedPrice();
+            str.append("\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + price + " ALL");
+            str.append(" x " + quantity.get(i) + " copies");
+            i++;
         }
-        
-        str += "\n\nTotal Price " + totalPrice + " ALL.";
-        return str;
+
+        str.append("\n\nTotal Price " + totalPrice + " ALL.");
+        return str.toString();
     }
-      
+
 
 }
