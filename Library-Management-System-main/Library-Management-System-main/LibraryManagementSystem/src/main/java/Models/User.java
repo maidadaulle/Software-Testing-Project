@@ -4,7 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class User implements Serializable {
+public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 2489625482462756647L;
     private static int noUsers;
