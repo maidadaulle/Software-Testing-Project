@@ -114,6 +114,12 @@
             <scope>test</scope>
             <systemPath>${project.basedir}/lib/testfx-core-4.0.17.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.17</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -127,6 +133,9 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+
+
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
