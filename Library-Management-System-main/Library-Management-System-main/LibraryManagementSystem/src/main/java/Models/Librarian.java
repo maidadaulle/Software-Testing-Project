@@ -12,6 +12,15 @@ public class Librarian extends User {
     private ArrayList<Date> datesSold;
     private ArrayList<Double> moneyMadeDates;
 
+
+    public void setDatesSold(ArrayList<Date> datesSold) {
+        this.datesSold = datesSold;
+    }
+
+    public void setMoneyMadeDates(ArrayList<Double> moneyMadeDates) {
+        this.moneyMadeDates = moneyMadeDates;
+    }
+
     public Librarian(String username, String password) {
         super(username, password, Roles.Librarian);
     }
@@ -24,6 +33,7 @@ public class Librarian extends User {
     public Librarian() {
 
     }
+
 
     public double moneyMadeInDay() {
 
