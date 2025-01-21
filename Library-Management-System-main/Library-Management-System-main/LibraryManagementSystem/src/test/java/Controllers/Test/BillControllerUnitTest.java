@@ -2,9 +2,7 @@ package Controllers.Test;
 
 import Controllers.BillController;
 import Controllers.FileController;
-import Models.Bill;
-import Models.BillsType;
-import Models.Book;
+import Models.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +18,50 @@ class BillControllerUnitTest {
     private BillController billController;
     private final ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
     private final PrintStream originalSystemOut = System.out;
+    private Book book1;
+    private Book book2;
 
     @BeforeEach
     void setUp() {
         billController = new BillController();
         System.setOut(new PrintStream(consoleOutput));
+
+        Author author1 = new Author("Author1", "Surname1", Gender.Male);
+
+        ArrayList<Category> categories = new ArrayList<>();
+        categories.add(new Category("Fiction"));
+        categories.add(new Category("Science"));
+
+        book1 = new Book("ISBN001", "Book 1", author1, categories, "Supplier1", 100, 150, 200, "Address1");
+        book2 = new Book("ISBN002", "Book 2", author1, categories, "Supplier2", 120, 180, 220, "Address2");
     }
+
+    @Test
+    void testCreateBill() {
+
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(book1);
+        books.add(book2);
+
+        ArrayList<Integer> quantity = new ArrayList<>();
+        quantity.add(2);
+        quantity.add(1);
+
+        int totalPrice = 380;
+        BillsType type = BillsType.Sold;
+
+        billController.createBill(1, books, quantity, totalPrice, type);
+        Bill createdBill = billController.getCreatedBill();
+
+        assertNotNull(createdBill);
+        assertEquals(1, createdBill.getBillNumber());
+        assertEquals(380, createdBill.getTotalPrice());
+        assertEquals(BillsType.Sold, createdBill.getType());
+        assertEquals(2, createdBill.getBooks().size());
+        assertEquals(2, createdBill.getQuantity().get(0));
+        assertEquals(1, createdBill.getQuantity().get(1));
+    }
+
     @Test
     void testAddBill() {
         FileController.transactions = new ArrayList<>();

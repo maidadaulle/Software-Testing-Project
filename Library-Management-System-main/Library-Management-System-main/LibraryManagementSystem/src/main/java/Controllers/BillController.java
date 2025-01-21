@@ -11,14 +11,27 @@ import Models.Book;
 
 public class BillController {
 
+    private Bill createdBill;
+    private static int billNumberCounter = 0; 
+
+
     public void addBill(Bill b) {
         FileController.transactions.add(b);
     }
 
     public void createBill(int ID, ArrayList<Book> books, ArrayList<Integer> quantity, int totalPrice, BillsType type) {
+        billNumberCounter = 0;
+        billNumberCounter++;
+
         Bill b = new Bill(ID, books, quantity, totalPrice, type);
+        createdBill = b;
         printBill(b);
     }
+
+    public Bill getCreatedBill() {
+        return createdBill;
+    }
+
 
     public void printBill(Bill b) {
         if (b == null) {
@@ -62,4 +75,7 @@ public class BillController {
         }
         return q;
     }
+
+
+
 }
