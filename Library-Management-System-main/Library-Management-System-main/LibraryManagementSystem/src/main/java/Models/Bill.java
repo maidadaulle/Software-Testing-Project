@@ -36,6 +36,7 @@ public class Bill implements Serializable {
         totalBills++;
         this.billNumber = totalBills;
         this.type = type;
+        this.quantity = new ArrayList<>(quantity);
     }
 
     public Date getCreatedDate() {
