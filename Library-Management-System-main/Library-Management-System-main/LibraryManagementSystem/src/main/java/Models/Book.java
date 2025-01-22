@@ -37,7 +37,13 @@ public class Book implements Serializable {
         this.cover = address;
     }
 
-
+public Book(String ISBN, String bookTitle, String authorName,int originalPrice, int sellingPrice){
+    this.bookTitle = bookTitle;
+    this.ISBN = ISBN;
+    Author author = new Author(authorName, "surname", Gender.MALE);
+    this.originalPrice = originalPrice;
+    this.sellingPrice = sellingPrice;
+}
     public Book(String ISBN, String bookTitle, Author author, ArrayList<Category> bookCategories, String supplier,
                 int purchasedPrice, int originalPrice, int sellingPrice, String address, Date purchasedDate) {
         this.bookTitle = bookTitle;

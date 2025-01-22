@@ -27,6 +27,16 @@ public class Bill implements Serializable {
         this.billNumber = totalBills;
         this.type = type;
     }
+    public Bill(int id, Book book, int quantity, int totalPrice, BillsType type){
+        this.createdDate = new Date();
+        this.soldBy = id;
+        this.books = new ArrayList<>(){};
+        books.add(book);
+        this.totalPrice = totalPrice;
+        totalBills++;
+        this.billNumber = totalBills;
+        this.type = type;
+    }
 
     public Date getCreatedDate() {
         return createdDate;

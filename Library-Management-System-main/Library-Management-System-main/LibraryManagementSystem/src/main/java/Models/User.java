@@ -48,6 +48,14 @@ public class User implements Serializable {
         this.id = ++noUsers;
     }
 
+    public User(String username, String password,Roles role, double salary) {
+        this.username = username;
+        this.password = password;
+        this.salary = salary;
+        this.id = ++noUsers;
+        this.userRole = role;
+    }
+
     public User(String name, String surname, String username,
             Roles userRole, String password, double salary,
             String phoneNum, LocalDate date, Gender gender, int accessLevel) {

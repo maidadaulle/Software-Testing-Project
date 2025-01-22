@@ -212,7 +212,7 @@ public class LibrarianController implements Modifiable {
         return specialChars.contains(String.valueOf(ch));
     }
 
-    static boolean isUniqueUsername(String username) {
+    public static boolean isUniqueUsername(String username) {
         for (User librarian : FileController.users) {
             if (librarian.getUsername().equals(username)) {
                 return false;
@@ -230,7 +230,7 @@ public class LibrarianController implements Modifiable {
         return null;
     }
 
-    public void addLibrarian(User librarian) {
+    public static void addLibrarian(User librarian) {
         FileController.users.add(librarian);
     }
 
@@ -348,3 +348,4 @@ public class LibrarianController implements Modifiable {
     }
 
 }
+

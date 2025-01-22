@@ -10,6 +10,10 @@ public class Admin extends User {
     public Admin(String username, String password) {
         super(username, password, Roles.Admin);
     }
+    public Admin(String username, String password, double salary) {
+        super(username, password, Roles.Admin,salary);
+
+    }
 
     public Admin(String name, String surname, String username, Roles userRole, String password,
             double salary, String phoneNum, Gender gender, LocalDate date, int accessLevel) {
