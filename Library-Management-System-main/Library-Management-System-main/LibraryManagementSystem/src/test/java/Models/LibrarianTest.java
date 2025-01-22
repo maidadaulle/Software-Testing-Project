@@ -6,7 +6,7 @@ import java.util.*;
 import java.time.*;
 import org.junit.jupiter.api.BeforeEach;
 
-class LibrarianUnitTest {
+class LibrarianTest {
 
     private Librarian librarian;
 
