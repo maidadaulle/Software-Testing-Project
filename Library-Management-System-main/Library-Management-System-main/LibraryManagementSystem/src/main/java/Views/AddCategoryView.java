@@ -42,12 +42,15 @@ public class AddCategoryView {
         gp.setAlignment(Pos.CENTER);
 
         Label name = new Label("Name of Category");
+        name.setId("category-name-label");
         TextField nameT = new TextField();
+        nameT.setId("category-name-field");
         gp.add(name, 0, 0);
         gp.add(nameT, 1, 0);
 
         Label systemLabel = new Label("System");
         Label label1=new Label("");
+        label1.setId("error-message-label");
         label1.setTextFill(Color.RED);
         gp.add(systemLabel, 0, 1);
         gp.add(label1, 1, 1);
@@ -67,6 +70,7 @@ public class AddCategoryView {
             }
         });
         Button back = new Button("Back");
+        back.setId("back-to-homepage-btn");
         back.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
             stage.setScene(employeeHomePage.showView(stage));

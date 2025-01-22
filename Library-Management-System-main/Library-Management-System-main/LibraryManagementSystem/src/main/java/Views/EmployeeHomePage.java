@@ -104,6 +104,7 @@ public class EmployeeHomePage {
             });
 
             Button addCategory = new Button("Add New Category");
+            addCategory.setId("add-category-btn");
             addCategory.setOnAction(i -> {
                 AddCategoryView addCategoryView = new AddCategoryView(currentUser);
                 stage.setScene(addCategoryView.addCategory(stage));
