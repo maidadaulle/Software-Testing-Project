@@ -61,9 +61,7 @@ public class ManagerController implements Modifiable {
             } else if (!isUniqueUsername(username) && !findUserById(id).getUsername().equals(username)) {
                 return new StandardViewResponse<>(manager, "There already exists a user with this username");
             }
-            if (!isValidPassword(password).isEmpty()) {
-                return new StandardViewResponse<>(manager, isValidPassword(password));
-            }
+
             LocalDate localDateCompare = LocalDate.now();
             if (localDate.isAfter(localDateCompare)) {
                 return new StandardViewResponse<>(manager, "BirthDate cannot be after actual date!");

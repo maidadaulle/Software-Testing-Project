@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import Models.Admin;
 import Models.Author;
@@ -26,10 +27,10 @@ public class FileController {
 	private static File categoriesFile;
 	private static File usersFile;
 
-	private final static String USER_ADD = "binaryFiles/users.dat";
+	private final static String USER_ADD = "C:\\Users\\User\\OneDrive\\Desktop\\Projects\\Front\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\users.dat";
 	private final static String CATEGORY_ADD = "binaryFiles/categories.dat";
 	private final static String BOOK_ADD = "binaryFiles/books.dat";
-	private final static String TRANSACTION_ADD = "binaryFiles/transactions.dat";
+	private final static String TRANSACTION_ADD = "C:\\Users\\User\\OneDrive\\Desktop\\Projects\\Front\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\transactions.dat";
 	private final static String AUTHOR_ADD = "binaryFiles/authors.dat";
 
 	public FileController() {
@@ -71,6 +72,13 @@ public class FileController {
 		}
 	}
 
+	public static List<Bill> getTransactions() {
+		return transactions;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
 	@SuppressWarnings("unchecked")
 	private void readUsers() {
 		try {
@@ -230,5 +238,11 @@ public class FileController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	
+	public void addUser(User existingUser) {
+		users.add(existingUser);
+		System.out.println("User added: " + existingUser.getUsername());
 	}
 }

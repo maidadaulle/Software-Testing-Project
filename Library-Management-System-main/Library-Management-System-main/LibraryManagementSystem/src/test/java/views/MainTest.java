@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
+
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    public class MainTest extends ApplicationTest {
+    public class MainTest  {
 
 
         @Override
@@ -84,6 +84,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
                 e.printStackTrace();
             }
         }
+
 
         }
 

@@ -56,7 +56,7 @@ public class Changepasscontroller {
         return new StandardViewResponse<>(user, "");
     }
 
-    static boolean isSpecialChar(char ch) {
+    public static boolean isSpecialChar(char ch) {
         String specialChars = "!@#$%^&*()._";
         return specialChars.contains(String.valueOf(ch));
     }

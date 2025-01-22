@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-class BillControllerUnitTest {
+class BillControllerTest {
 
     private BillController billController;
     private final ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
@@ -34,6 +34,8 @@ class BillControllerUnitTest {
 
         book1 = new Book("ISBN001", "Book 1", author1, categories, "Supplier1", 100, 150, 200, "Address1");
         book2 = new Book("ISBN002", "Book 2", author1, categories, "Supplier2", 120, 180, 220, "Address2");
+
+        Bill.setTotalBills(0);
     }
 
     @Test
@@ -229,3 +231,4 @@ class BillControllerUnitTest {
 
 
 }
+
