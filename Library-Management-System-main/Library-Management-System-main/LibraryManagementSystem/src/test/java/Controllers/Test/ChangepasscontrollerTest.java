@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class ChangepasscontrollerUnitTest {
+class ChangepasscontrollerTest {
 
     private Changepasscontroller changePassController;
     private List<User> users;
