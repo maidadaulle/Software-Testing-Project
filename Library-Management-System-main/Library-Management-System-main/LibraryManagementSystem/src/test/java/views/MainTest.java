@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
             }
         }
 
-        @Test
+        @Test  
         public void testLaunchMainApp() {
             FxAssert.verifyThat("Log In", NodeMatchers.isVisible());
             try {
