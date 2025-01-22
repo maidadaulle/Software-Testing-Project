@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.time.ZonedDateTime;
 
-public class CostsControllerUnitTest {
+public class CostsControllerTest {
 
     private CostsController costsController;
     private List<Bill> mockTransactions;
@@ -120,3 +120,4 @@ public class CostsControllerUnitTest {
         assertTrue(result.isEmpty());
     }
 }
+
