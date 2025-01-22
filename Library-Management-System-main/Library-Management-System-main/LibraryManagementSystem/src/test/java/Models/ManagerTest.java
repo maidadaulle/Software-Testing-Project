@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagerUnitTest {
+class ManagerTest {
 
     @Test
     void testManagerConstructor1() {
