@@ -231,4 +231,10 @@ public class FileController {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	
+	public void addUser(User existingUser) {
+		users.add(existingUser);
+		System.out.println("User added: " + existingUser.getUsername());
+	}
 }
