@@ -34,26 +34,34 @@ public class LogInView {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setAlignment(Pos.CENTER);
 
+        // Label and TextField for Username
         Label usernameLabel = new Label("Username");
         TextField usernameTxtField = new TextField();
+        usernameTxtField.setId("usernameField"); // Added fx:id
         gridPane.add(usernameLabel, 0, 0);
         gridPane.add(usernameTxtField, 1, 0);
 
+        // Label and PasswordField for Password
         Label passwordLabel = new Label("Password");
-        TextField passwordField = new PasswordField();
+        PasswordField passwordField = new PasswordField();
+        passwordField.setId("passwordField"); // Added fx:id
         gridPane.add(passwordLabel, 0, 1);
         gridPane.add(passwordField, 1, 1);
 
+        // Label and TextField for System
         Label systemLabel = new Label("System");
         TextField systemField = new TextField();
         systemField.setEditable(false);
+        systemField.setId("systemField"); // Added fx:id
         gridPane.add(systemLabel, 0, 2);
         gridPane.add(systemField, 1, 2);
 
+        // Submit Button
         Button submitButton = new Button("Log In");
-        // GridPane.setColumnSpan(submitButton, 2);
+        submitButton.setId("submitButton"); // Added fx:id
         gridPane.add(submitButton, 0, 3);
 
+        // Log In Button Action
         submitButton.setOnAction(e -> {
             LogInController controller = new LogInController();
             StandardViewResponse<User> user = controller.OnLogInBtnClick(usernameTxtField.getText(),
@@ -83,53 +91,11 @@ public class LogInView {
                 }
             }
         });
-        passwordField.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                LogInController controller = new LogInController();
-                StandardViewResponse<User> user = controller.OnLogInBtnClick(usernameTxtField.getText(),
-                        passwordField.getText());
-                if (user.getUser() == null) {
-                    if (user.getErrorMessage().equals("Wrong Password!")) {
-                        systemField.setText("Wrong Password!");
-                        passwordField.clear();
-                    } else if (user.getErrorMessage().equals("Username cannot be null!")) {
-                        systemField.setText("Username can't be null");
-                        passwordField.clear();
-                    } else if (user.getErrorMessage().equals("Password cannot be null!")) {
-                        systemField.setText("Password can't be null");
-                        usernameTxtField.clear();
-                    } else {
-                        systemField.setText("Wrong Credentials!");
-                        usernameTxtField.clear();
-                        passwordField.clear();
-                    }
-                } else {
-                    if (user.getUser() instanceof Admin) {
-                        AdminHomePage adminHomePage = new AdminHomePage(user.getUser());
-                        stage.setScene(adminHomePage.showAdminHomePage(stage));
-                    } else {
-                        EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
-                        stage.setScene(employeeHomePage.showView(stage));
-                        if((user.getUser()).getAccessLevel()==2||(user.getUser()).getAccessLevel()==3){
-                            StockController sc = new StockController();
-                            if(!sc.needRestock().isEmpty()){
-                                String str= "";
-                                for(String s : sc.needRestock()){
-                                    str+="\n"+s;
-                                }
-                                Alert info = new Alert(AlertType.INFORMATION);
-                                info.setHeaderText("The following books need to be restocked:"+str);
-                                info.showAndWait();
-                            }
-                        }
-                    }
 
-                }
-            }
-        });
+
+
         border.setCenter(gridPane);
 
         return new Scene(border, 700, 500);
     }
-
 }

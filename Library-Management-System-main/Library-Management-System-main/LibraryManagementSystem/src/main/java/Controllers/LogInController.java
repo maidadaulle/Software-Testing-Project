@@ -6,6 +6,11 @@ import Models.StandardViewResponse;
 public class LogInController {
 
     public StandardViewResponse<User> OnLogInBtnClick(String username, String password) {
+        // Ensure the users are loaded before login
+        if (FileController.users == null || FileController.users.isEmpty()) {
+            FileController fileController = new FileController();  // Make sure to initialize FileController
+        }
+
         if (username.isEmpty()) {
             return new StandardViewResponse<User>(null, "Username cannot be null!");
         }
