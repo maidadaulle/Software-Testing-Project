@@ -141,7 +141,7 @@ class AddLibrarianViewTest extends ApplicationTest {
 
         Platform.runLater(() -> {
             assertTrue(stage.getScene().getRoot() instanceof BorderPane,
-                    "The scene should have transitioned to LibrarianHomePage.");
+                    "The scene should have transitioned to AdminHomePage.");
         });
 
         sleep(1000);
