@@ -33,7 +33,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 public class AddStockView {
     private static User currentUser;
     private static Stage stage;
@@ -60,11 +59,15 @@ public class AddStockView {
         pane.setCenter(hb);
 
         Label searchL = new Label("Search with ISBN: ");
+        searchL.setId("searchLabel"); // ID for the label
         TextField searchF = new TextField();
+        searchF.setId("isbnTextField"); // ID for the ISBN text field
         Label searchMsg = new Label();
+        searchMsg.setId("searchMessageLabel"); // ID for the message label
         searchMsg.setStyle("-fx-text-fill: red;");
 
         Text text = new Text("Find Book For Stock");
+        text.setId("titleText"); // ID for the title text
         StackPane stack = new StackPane();
         text.setFont(new Font(30));
         stack.getChildren().add(text);
@@ -85,6 +88,7 @@ public class AddStockView {
         MyButtonClickHandler myBtn = new MyButtonClickHandler();
 
         Button back = new Button("Homepage");
+        back.setId("backButton"); // ID for the back button
         gPane.add(back, 2, 1);
         back.setOnAction(myBtn::handle);
 
@@ -118,25 +122,38 @@ public class AddStockView {
                         cover.setFitWidth(300);
                         cover.setFitHeight(290);
                         cover.setPreserveRatio(true);
+                        cover.setId("bookCover"); // ID for the book cover image
                         Label book = new Label("Book: " + foundBook.getBookTitle());
+                        book.setId("bookLabel"); // ID for the book label
                         Label author = new Label("Author: " + foundBook.getAuthor().getName() + " "
                                 + foundBook.getAuthor().getSurname());
+                        author.setId("authorLabel"); // ID for the author label
                         Label price = new Label("Purchase price: " + foundBook.getPurchasedPrice());
+                        price.setId("priceLabel"); // ID for the price label
                         Label date = new Label();
                         if (foundBook.getPurchasedDate() == null) {
                             date.setText("Last purchased date: Not purchased yet");
                         } else {
                             date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
                         }
+                        date.setId("dateLabel"); // ID for the date label
                         Label stock = new Label("Current stock: " + foundBook.getStock());
+                        stock.setId("stockLabel"); // ID for the stock label
 
                         Label newStock = new Label("No. books:");
+                        newStock.setId("newStockLabel"); // ID for the "No. books" label
                         TextField newStockT = new TextField();
+                        newStockT.setId("newStockTextField"); // ID for the new stock text field
                         Label newStockM = new Label();
+                        newStockM.setId("newStockMessageLabel"); // ID for the new stock message label
                         newStockM.setStyle("-fx-text-fill: red;");
+
                         Label stockP = new Label("Stock Price: ");
+                        stockP.setId("stockPriceLabel"); // ID for the stock price label
                         TextField stockPF = new TextField();
                         stockPF.setEditable(false);
+                        stockPF.setId("stockPriceField"); // ID for the stock price field
+
                         newStockT.textProperty().addListener((observable, oldValue, newValue) -> {
                             try {
                                 if (newValue != null) {
@@ -150,18 +167,17 @@ public class AddStockView {
                                     newStockM.setText("Can't be empty!");
                                 }
                             } catch (Exception e2) {
-                                System.out.println(e2.getMessage());
                                 newStockT.setStyle("-fx-text-fill: red;");
                                 newStockM.setText("Can't have letters in stock field!");
                             }
                         });
 
                         Button add = new Button("Add Stock");
+                        add.setId("addStockButton"); // ID for the Add Stock button
                         add.setOnAction(x -> {
                             if (newStockM.getText() != null) {
-                                Alert error = new Alert(AlertType.ERROR);
-                                error.setHeaderText("Check Stock Field!");
-                                error.showAndWait();
+                                // Instead of an alert, update the label with the error message
+                                newStockM.setText("Check Stock Field!");
                             } else {
                                 ArrayList<Book> b = new ArrayList<>();
                                 b.add(foundBook);
@@ -173,14 +189,11 @@ public class AddStockView {
                                 ss.updateStockAfterBought(foundBook, Integer.parseInt(newStockT.getText()));
                                 date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
                                 stock.setText("Current stock: " + foundBook.getStock());
-                                Alert info = new Alert(AlertType.INFORMATION);
-                                info.setHeaderText("Book stock added successfully!");
-                                info.showAndWait();
+                                // Display success message in label instead of alert
+                                newStockM.setText("Book stock added successfully!");
                                 newStockT.setText(null);
                                 stockPF.setText(null);
-                                newStockM.setText(null);
                             }
-
                         });
 
                         GridPane gp1 = new GridPane();
@@ -197,9 +210,8 @@ public class AddStockView {
                         vb.getChildren().addAll(book, author, price, date, stock);
                         hb.getChildren().addAll(cover, vb, gp1);
                     } else {
-                        Alert error = new Alert(AlertType.INFORMATION);
-                        error.setHeaderText("This book doesn't exists in the database!");
-                        error.showAndWait();
+                        // Show standard error message in label
+                        searchMsg.setText("This book doesn't exist in the database!");
                     }
                 }
             }
@@ -213,6 +225,8 @@ public class AddStockView {
         sp.prefHeightProperty().bind(sc.heightProperty());
         return sc;
     }
+
+
 
     public int totalPriceCalculation(Book b, int quantity) {
         return b.getPurchasedPrice() * quantity;
