@@ -218,3 +218,4 @@ public class AddStockView {
         return b.getPurchasedPrice() * quantity;
     }
 }
+
