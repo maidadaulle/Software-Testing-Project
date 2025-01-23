@@ -136,7 +136,7 @@ public class StatisticControllerTest {
     }
 
     @Test
-    void testNumberOfBooksBoughtDuringPeriod_InvalidDateRange() {
+        void testNumberOfBooksBoughtDuringPeriod_InvalidDateRange() {
         LocalDate startDate = LocalDate.of(2024, 1, 1);
         LocalDate endDate = LocalDate.of(2025, 1, 23);
 
