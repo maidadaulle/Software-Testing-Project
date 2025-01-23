@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="testfx-core-4.0.17">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Library-Management-System-main/Library-Management-System-main/LibraryManagementSystem/lib/testfx-core-4.0.17.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

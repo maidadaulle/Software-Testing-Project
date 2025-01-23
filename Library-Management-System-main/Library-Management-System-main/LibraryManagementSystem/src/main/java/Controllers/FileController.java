@@ -28,10 +28,10 @@ public class FileController {
 	public static File usersFile;
 
 	private final static String USER_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\users.dat";
-	private final static String CATEGORY_ADD = "binaryFiles/categories.dat";
-	private final static String BOOK_ADD = "binaryFiles/books.dat";
-	private final static String TRANSACTION_ADD = "C:\\Users\\User\\OneDrive\\Desktop\\Projects\\Front\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\transactions.dat";
-	private final static String AUTHOR_ADD = "binaryFiles/authors.dat";
+	private final static String CATEGORY_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\categories.dat";
+	private final static String BOOK_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\books.dat";
+	private final static String TRANSACTION_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\transactions.dat";
+	private final static String AUTHOR_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\authors.dat";
 
 	public FileController() {
 		try {
