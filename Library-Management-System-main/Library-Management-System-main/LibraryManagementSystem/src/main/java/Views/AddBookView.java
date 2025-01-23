@@ -8,18 +8,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
-import java.io.File;
-
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,10 +35,12 @@ public class AddBookView {
     }
 
     public void saveToFolder() {
-        try {
-            Files.copy(this.selectedFile.toPath(), this.targetPath);
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        if (selectedFile != null) {
+            try {
+                Files.copy(this.selectedFile.toPath(), this.targetPath);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -73,17 +73,20 @@ public class AddBookView {
 
         Label isbn = new Label("ISBN");
         TextField isbn1 = new TextField();
+        isbn1.setId("isbn1");
         gp.add(isbn, 0, 0);
         gp.add(isbn1, 1, 0);
 
         Label book = new Label("Book Title");
         TextField booktitle = new TextField();
+        booktitle.setId("booktitle");
         gp.add(book, 0, 1);
         gp.add(booktitle, 1, 1);
 
         Label authorL = new Label("Select an Author");
         ArrayList<Author> authors = FileController.authors;
         ComboBox<Author> authorComboBox = new ComboBox<>();
+        authorComboBox.setId("authorComboBox");
         authorComboBox.getItems().addAll(authors);
         gp.add(authorL, 0, 2);
         gp.add(authorComboBox, 1, 2);
@@ -93,38 +96,49 @@ public class AddBookView {
         ArrayList<Category> categories = FileController.categories;
         ArrayList<CheckBox> categoryCheckboxes = new ArrayList<>();
         for (Category g : categories) {
-            categoryCheckboxes.add(new CheckBox(g.toString()));
+            CheckBox checkbox = new CheckBox(g.toString());
+            checkbox.setId("categoryCheckBox_" + g.toString());
+            categoryCheckboxes.add(checkbox);
         }
         VBox pane = new VBox(10);
         pane.setPadding(new Insets(4));
         pane.getChildren().addAll(categoryCheckboxes);
         gp.add(pane, 1, 3);
 
-        Label su = new Label("Suplier");
+        Label su = new Label("Supplier");
         TextField sut = new TextField();
+        sut.setId("supplier");
         gp.add(su, 0, 4);
         gp.add(sut, 1, 4);
 
         Label p = new Label("Purchased Price");
         TextField pt = new TextField();
+        pt.setId("purchasePrice");
         gp.add(p, 0, 5);
         gp.add(pt, 1, 5);
 
         Label o = new Label("Original Price");
         TextField ot = new TextField();
+        ot.setId("originalPrice");
         gp.add(o, 0, 6);
         gp.add(ot, 1, 6);
 
         Label s = new Label("Selling Price");
         TextField st = new TextField();
+        st.setId("sellingPrice");
         gp.add(s, 0, 7);
         gp.add(st, 1, 7);
 
         Label coverL = new Label("Cover");
         gp.add(coverL, 0, 8);
-
         Button openButton = new Button("Select Cover");
+        openButton.setId("selectCoverButton");
         gp.add(openButton, 1, 8);
+
+        Label errorLabel = new Label("");
+        errorLabel.setId("errorLabel");
+        errorLabel.setTextFill(Color.RED);
+        gp.add(errorLabel, 1, 9);  // Add errorLabel to display error messages
 
         openButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -142,108 +156,84 @@ public class AddBookView {
                 Image image = new Image(imageUrl);
 
                 ImageView cover = new ImageView(image);
+                cover.setId("bookCoverImage");
                 cover.setFitHeight(120);
                 cover.setFitWidth(100);
                 gp.add(cover, 2, 8);
             } else {
-                Alert error = new Alert(AlertType.ERROR);
-                error.setHeaderText("You need to select a picture!");
-                error.showAndWait();
+                // If no image is selected, it's not an error.
+                // errorLabel.setText("You need to select a picture!");
             }
         });
 
         Button registerButton = new Button("Register Book");
-
+        registerButton.setId("registerBookButton");
         registerButton.setOnAction(e -> {
             BookController controller = new BookController();
             CategoryController cc = new CategoryController();
             ArrayList<Category> selected = new ArrayList<>();
+            errorLabel.setText(""); // Clear previous errors
+
             if (isbn1.getText().isEmpty()) {
-                Alert error = new Alert(AlertType.ERROR);
-                error.setHeaderText("ISBN can't be empty!");
-                error.showAndWait();
+                errorLabel.setText("ISBN can't be empty!");
             } else {
                 try {
                     controller.verifyISBN(isbn1.getText());
                     if (booktitle.getText().isEmpty()) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("You need to inseret a title!");
-                        error.showAndWait();
+                        errorLabel.setText("You need to insert a title!");
                     } else if (authorComboBox.getSelectionModel().getSelectedItem() == null) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("Select at least one author!");
-                        error.showAndWait();
+                        errorLabel.setText("Select at least one author!");
                     } else if (!controller.selectedCategory(categoryCheckboxes)) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("Select at least one category!");
-                        error.showAndWait();
+                        errorLabel.setText("Select at least one category!");
                     } else if (sut.getText().isEmpty()) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("You need to insert a supplier!");
-                        error.showAndWait();
+                        errorLabel.setText("You need to insert a supplier!");
                     } else if (pt.getText().isEmpty() || ot.getText().isEmpty() || st.getText().isEmpty()) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("You need to insert price!");
-                        error.showAndWait();
+                        errorLabel.setText("You need to insert price!");
                     } else if (!controller.priceValidation(pt.getText()) || !controller.priceValidation(ot.getText())
                             || !controller.priceValidation(st.getText())) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("Price can't have letters!");
-                        error.showAndWait();
-                    } else if (selectedFile == null) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("You need to select a picture!");
-                        error.showAndWait();
+                        errorLabel.setText("Price can't have letters!");
                     } else if (controller.findBook(isbn1.getText()) != null) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("Book with this ISBN already exists!");
-                        error.showAndWait();
+                        errorLabel.setText("Book with this ISBN already exists!");
                     } else if (Integer.parseInt(pt.getText()) <= 0 || Integer.parseInt(ot.getText()) <= 0
                             || Integer.parseInt(st.getText()) <= 0) {
-                        Alert error = new Alert(AlertType.ERROR);
-                        error.setHeaderText("Price can't be negative or 0!");
-                        error.showAndWait();
+                        errorLabel.setText("Price can't be negative or 0!");
                     } else {
                         for (int i = 0; i < categoryCheckboxes.size(); i++) {
                             if (categoryCheckboxes.get(i).isSelected()) {
                                 selected.add(cc.findCategory(i));
                             }
                         }
-                        saveToFolder();
+                        if (selectedFile != null) {
+                            saveToFolder();  // Only save the image if a file was selected
+                        }
+
                         controller.createBook(isbn1.getText(), booktitle.getText(), authorComboBox.getValue(), selected,
                                 sut.getText(), Integer.parseInt(pt.getText()), Integer.parseInt(ot.getText()),
                                 Integer.parseInt(st.getText()), relativeImagePath);
-                        Alert success = new Alert(Alert.AlertType.INFORMATION);
-                        success.setHeaderText("Book was successfully added!");
-                        success.showAndWait();
-                        EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                        stage.setScene(employeeHomePage.showView(stage));
+
+                        // Success message
+                        errorLabel.setTextFill(Color.GREEN);
+                        errorLabel.setText("Book was successfully added!");
                     }
                 } catch (InvalidIsbnFormatException e2) {
-                    System.out.println(e2.getMessage());
-                    Alert error = new Alert(AlertType.ERROR);
-                    error.setHeaderText("ISBN format is incorrect!");
-                    error.showAndWait();
+                    errorLabel.setText("ISBN format is incorrect!");
                 }
             }
         });
+
         Button back = new Button("Back");
+        back.setId("backButton");
         back.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
             stage.setScene(employeeHomePage.showView(stage));
         });
+
         HBox b2 = new HBox();
         b2.setSpacing(10);
         b2.getChildren().addAll(registerButton, back);
-        gp.add(b2, 1, 9);
+        gp.add(b2, 1, 10);
         bp.setCenter(gp);
 
-        ScrollPane sp = new ScrollPane(bp);
-        sp.setFitToWidth(true);
-        sp.setFitToHeight(true);
-        Scene sc = new Scene(sp, 700, 500);
-        sp.prefWidthProperty().bind(sc.widthProperty());
-        sp.prefHeightProperty().bind(sc.heightProperty());
-        return sc;
+        return new Scene(bp, 800, 600);
     }
 }
