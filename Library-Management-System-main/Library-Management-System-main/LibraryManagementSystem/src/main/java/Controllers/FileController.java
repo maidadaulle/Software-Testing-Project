@@ -21,11 +21,11 @@ public class FileController {
 	public static ArrayList<Book> books;
 	public static ArrayList<Bill> transactions;
 	public static ArrayList<Author> authors;
-	private static File authorsFile;
-	private static File transactionsFile;
-	private static File booksFile;
-	private static File categoriesFile;
-	private static File usersFile;
+	public static File authorsFile;
+	public static File transactionsFile;
+	public static File booksFile;
+	public static File categoriesFile;
+	public static File usersFile;
 
 	private final static String USER_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\users.dat";
 	private final static String CATEGORY_ADD = "C:\\Users\\User\\Desktop\\3\\testing\\Software-Testing-Project\\Library-Management-System-main\\Library-Management-System-main\\binaryFiles\\categories.dat";
@@ -80,7 +80,7 @@ public class FileController {
 		return users;
 	}
 	@SuppressWarnings("unchecked")
-	private void readUsers() {
+	public void readUsers() {
 		try {
 			FileInputStream fis = new FileInputStream(usersFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -116,7 +116,7 @@ public class FileController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readCategories() {
+	public void readCategories() {
 		try {
 			FileInputStream fis = new FileInputStream(categoriesFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -144,7 +144,7 @@ public class FileController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readBooks() {
+	public void readBooks() {
 		try {
 			FileInputStream fis = new FileInputStream(booksFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -213,7 +213,7 @@ public class FileController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readAuthors() {
+	public void readAuthors() {
 		try {
 			FileInputStream fis = new FileInputStream(authorsFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
