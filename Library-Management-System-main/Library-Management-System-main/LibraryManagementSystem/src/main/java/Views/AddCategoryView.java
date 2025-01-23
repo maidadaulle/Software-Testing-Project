@@ -56,6 +56,7 @@ public class AddCategoryView {
         gp.add(label1, 1, 1);
 
         Button registerButton = new Button("Register Category");
+        registerButton.setId("register-category-btn");
         registerButton.setOnAction(e -> {
             CategoryController controller = new CategoryController();
             var added = controller.createCategory(nameT.getText());
@@ -63,9 +64,8 @@ public class AddCategoryView {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Category was successfully added!");
                 success.showAndWait();
-                EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
-            } else {
+
+        } else {
                 label1.setText(added.getErrorMessage());
             }
         });
