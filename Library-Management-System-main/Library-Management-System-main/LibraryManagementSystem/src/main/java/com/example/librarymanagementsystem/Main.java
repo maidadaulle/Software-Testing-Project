@@ -2,8 +2,10 @@ package com.example.librarymanagementsystem;
 
 import Controllers.BookController;
 import Controllers.FileController;
+import Models.Admin;
 import Models.Book;
 import Views.LogInView;
+import Views.PrintBillView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -17,7 +19,8 @@ public class Main extends Application {
         @SuppressWarnings("unused")
         FileController fileController = new FileController();
         LogInView lg = new LogInView();
-        Scene scene = lg.showLogInScene(stage);
+        PrintBillView printBillView = new PrintBillView(new Admin("admin","pass"));
+        Scene scene = printBillView.showView(stage);
 
         stage.setOnCloseRequest(e -> {
             FileController.writeUsers();

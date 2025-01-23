@@ -7,10 +7,7 @@ import Models.Roles;
 import Models.User;
 import Views.AddAuthorView;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +25,7 @@ public class AddAuthorViewTest extends ApplicationTest {
 
     private AddAuthorView addAuthorView;
     private TextField nameField;
-    private TextField systemField;
+    private Label systemField;
     private TextField surnameField;
     private RadioButton maleRadio;
     private RadioButton femaleRadio;
@@ -137,7 +134,7 @@ public class AddAuthorViewTest extends ApplicationTest {
         waitForFxEvents();
 
         // Verify that the user is redirected to the previous screen
-        assertTrue(lookup("#previousScreen").query() != null);  // Assuming the previous screen has this ID
+        assertTrue(lookup("#previousScreen").query() != null);
     }
 
     @Test

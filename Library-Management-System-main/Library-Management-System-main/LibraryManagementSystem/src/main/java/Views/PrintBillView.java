@@ -51,7 +51,9 @@ public class PrintBillView {
         pane.setTop(stack);
 
         Label totalPrice = new Label("Total Price: ");
+        totalPrice.setId("totalPriceLabel");  // Set ID for Total Price label
         TextField totalPriceF = new TextField();
+        totalPriceF.setId("totalPriceField");  // Set ID for Total Price field
         totalPriceF.setEditable(false);
         HBox hb = new HBox(10);
         hb.setAlignment(Pos.CENTER);
@@ -62,13 +64,20 @@ public class PrintBillView {
         StockController stc = new StockController();
 
         Label isbnL = new Label("Book ISBN13");
+        isbnL.setId("isbnLabel");  // Set ID for ISBN label
         Label copiesL = new Label("Number of Copies");
+        copiesL.setId("copiesLabel");  // Set ID for Copies label
         Label priceL = new Label("Book Price");
+        priceL.setId("priceLabel");  // Set ID for Price label
         TextField isbnF = new TextField();
+        isbnF.setId("isbnField");  // Set ID for ISBN field
         TextField copiesF = new TextField();
+        copiesF.setId("copiesField");  // Set ID for Copies field
         TextField priceF = new TextField();
+        priceF.setId("priceField");  // Set ID for Price field
         priceF.setEditable(false);
         Button addField = new Button("+");
+        addField.setId("addFieldButton");  // Set ID for Add Field button
 
         GridPane gp = new GridPane();
         gp.setHgap(10);
@@ -148,11 +157,13 @@ public class PrintBillView {
         });
 
         Button back = new Button("Cancel");
+        back.setId("backButton");  // Set ID for Back button
         back.setOnAction(e -> {
             EmployeeHomePage hp = new EmployeeHomePage(currentUser);
             stage.setScene(hp.showView(stage));
         });
         Button print = new Button("Finish Transaction");
+        print.setId("finishTransactionButton");  // Set ID for Finish Transaction button
         print.setOnAction(e -> {
             if (!totalPriceF.getText().isEmpty()) {
                 bl.createBill(currentUser.getId(), books, quantity, totalPriceCalculation(),
@@ -198,5 +209,6 @@ public class PrintBillView {
         }
         return tp;
     }
-
 }
+
+
