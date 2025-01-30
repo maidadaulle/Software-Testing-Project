@@ -27,6 +27,13 @@ public class EditLibrarianViewTest extends ApplicationTest {
     private Librarian librarian;
     private User adminUser;
 
+    @Override
+    public void start(Stage stage) {
+        Scene scene = view.editLibrarian(stage, librarian);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     @BeforeEach
     public void setUp() {
         librarian = new Librarian(
@@ -57,12 +64,7 @@ public class EditLibrarianViewTest extends ApplicationTest {
         view = new EditLibrarianView(adminUser);
     }
 
-    @Override
-    public void start(Stage stage) {
-        Scene scene = view.editLibrarian(stage, librarian);
-        stage.setScene(scene);
-        stage.show();
-    }
+
 
     @Test
     public void testSceneLoads() {
@@ -122,3 +124,4 @@ public class EditLibrarianViewTest extends ApplicationTest {
         assertTrue(femaleRadioButton.isSelected());
     }
 }
+
