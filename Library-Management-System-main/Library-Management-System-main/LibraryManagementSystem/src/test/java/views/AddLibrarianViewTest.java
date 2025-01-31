@@ -6,26 +6,43 @@ import Views.AddLibrarianView;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.util.function.BooleanSupplier;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 class AddLibrarianViewTest extends ApplicationTest {
 
     private Button registerButton;
     private TextField nameTxtField, surnameTxtField, usernameTxtField, passwordField, checkPasswordField, phoneNumField, salaryField;
+    private DatePicker dateP;
     private Label errorMessageLabel;
     private Stage stage;
     private LibrarianController mockLibrarianController;
     private User mockUser;
+
+    public void waitUntil(BooleanSupplier condition) {
+        long timeout = System.currentTimeMillis() + 5000;
+        while (System.currentTimeMillis() < timeout) {
+            if (condition.getAsBoolean()) {
+                return;
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        throw new AssertionError("Condition not met within timeout");
+    }
 
     @BeforeEach
     public void setUp() {
@@ -36,7 +53,6 @@ class AddLibrarianViewTest extends ApplicationTest {
 
         mockLibrarianController = mock(LibrarianController.class);
 
-        sleep(1000);
         Platform.runLater(() -> {
             AddLibrarianView addLibrarianView = new AddLibrarianView(mockUser);
             stage = new Stage();
@@ -48,25 +64,9 @@ class AddLibrarianViewTest extends ApplicationTest {
         waitUntil(() -> stage != null && stage.isShowing());
     }
 
-    public void waitUntil(BooleanSupplier condition) {
-        long timeout = System.currentTimeMillis() + 5000;
-        while (System.currentTimeMillis() < timeout) {
-            if (condition.getAsBoolean()) {
-                return;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        throw new AssertionError("Condition not met within timeout");
-    }
-
     @Test
     public void testAddLibrarianSuccess() {
-        User mockUser = new User("librarian", "librarian123", Roles.Librarian);
-
+        // Mock successful librarian addition
         StandardViewResponse<User> successResponse = new StandardViewResponse<>(new User("librarian", "librarian123", Roles.Librarian), null);
         when(mockLibrarianController.addUser(any(), any(), any(), any(), any(), any(), any(), any(), any(), any()))
                 .thenReturn(successResponse);
@@ -89,7 +89,7 @@ class AddLibrarianViewTest extends ApplicationTest {
 
         registerButton = lookup("#register-librarian-btn").query();
         clickOn(registerButton);
-        waitForFxEvents();
+        sleep(1000);
 
         Platform.runLater(() -> {
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -97,7 +97,6 @@ class AddLibrarianViewTest extends ApplicationTest {
             successAlert.showAndWait();
 
             Button okButton = (Button) successAlert.getDialogPane().lookupButton(ButtonType.OK);
-            waitUntil(() -> okButton != null && okButton.isVisible());
             clickOn(okButton);
         });
 
@@ -127,7 +126,7 @@ class AddLibrarianViewTest extends ApplicationTest {
 
         registerButton = lookup("#register-librarian-btn").query();
         clickOn(registerButton);
-        waitForFxEvents();
+        sleep(1000);
 
         errorMessageLabel = (Label) stage.getScene().lookup("#error-message-label");
         assertNotNull(errorMessageLabel, "Error message label should be present.");
@@ -139,13 +138,12 @@ class AddLibrarianViewTest extends ApplicationTest {
         Button backButton = lookup("#back-to-homepage-btn").query();
         clickOn(backButton);
         sleep(1000);
-        waitForFxEvents();
 
         Platform.runLater(() -> {
             assertTrue(stage.getScene().getRoot() instanceof BorderPane,
                     "The scene should have transitioned to AdminHomePage.");
         });
+
         sleep(1000);
-        waitForFxEvents();
     }
 }
